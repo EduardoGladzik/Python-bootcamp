@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+
+{% block title %}Erro interno - Gerenciador de Tarefas{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-6 mx-auto text-center">
+        <div class="card shadow">
+            <div class="card-body py-5">
+                <i class="fas fa-exclamation-circle fa-4x text-danger mb-4"></i>
+                <h1 class="display-4">500</h1>
+                <h2 class="mb-4">Erro interno do servidor</h2>
+                <p class="lead text-muted mb-4">
+                    Ocorreu um erro interno no servidor. Tente novamente mais tarde.
+                </p>
+                <a href="{{ url_for('index') }}" class="btn btn-primary">
+                    <i class="fas fa-home me-2"></i>Voltar ao Início
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+

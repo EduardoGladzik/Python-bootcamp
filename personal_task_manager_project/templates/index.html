@@ -1,0 +1,123 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-8 mx-auto">
+        <div class="card shadow">
+            <div class="card-header bg-white">
+                <h2 class="mb-0">
+                    <i class="fas fa-list me-2"></i>Minhas Tarefas
+                </h2>
+            </div>
+            <div class="card-body">
+                <!-- Formulário para adicionar nova tarefa -->
+                <form method="POST" action="{{ url_for('add_task') }}" class="mb-4">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="title" class="form-label">Título da Tarefa</label>
+                                <input type="text" class="form-control" id="title" name="title" required>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="description" class="form-label">Descrição (opcional)</label>
+                                <input type="text" class="form-control" id="description" name="description">
+                            </div>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fas fa-plus me-2"></i>Adicionar Tarefa
+                    </button>
+                </form>
+
+                <hr>
+
+                <!-- Lista de tarefas -->
+                {% if tasks %}
+                    <div class="row">
+                        {% for task in tasks %}
+                        <div class="col-12 mb-3">
+                            <div class="card task-item {% if task.completed %}completed{% endif %}">
+                                <div class="card-body">
+                                    <div class="d-flex justify-content-between align-items-start">
+                                        <div class="flex-grow-1">
+                                            <h5 class="card-title mb-1">
+                                                {% if task.completed %}
+                                                    <i class="fas fa-check-circle text-success me-2"></i>
+                                                {% else %}
+                                                    <i class="fas fa-circle text-secondary me-2"></i>
+                                                {% endif %}
+                                                {{ task.title }}
+                                            </h5>
+                                            {% if task.description %}
+                                                <p class="card-text text-muted mb-2">{{ task.description }}</p>
+                                            {% endif %}
+                                            <small class="text-muted">
+                                                <i class="fas fa-clock me-1"></i>Criada em: {{ task.created_at }}
+                                            </small>
+                                        </div>
+                                        <div class="btn-group" role="group">
+                                            {% if not task.completed %}
+                                                <a href="{{ url_for('complete_task', task_id=task.id) }}" 
+                                                   class="btn btn-success btn-sm" 
+                                                   title="Marcar como concluída">
+                                                    <i class="fas fa-check"></i>
+                                                </a>
+                                            {% endif %}
+                                            <a href="{{ url_for('delete_task', task_id=task.id) }}" 
+                                               class="btn btn-danger btn-sm" 
+                                               title="Excluir tarefa"
+                                               onclick="return confirm('Tem certeza que deseja excluir esta tarefa?')">
+                                                <i class="fas fa-trash"></i>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    <div class="text-center py-5">
+                        <i class="fas fa-clipboard-list fa-3x text-muted mb-3"></i>
+                        <h4 class="text-muted">Nenhuma tarefa encontrada</h4>
+                        <p class="text-muted">Adicione sua primeira tarefa usando o formulário acima!</p>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+
+        <!-- Estatísticas -->
+        {% if tasks %}
+        <div class="row mt-4">
+            <div class="col-md-4">
+                <div class="card text-center">
+                    <div class="card-body">
+                        <h5 class="card-title text-primary">{{ tasks|length }}</h5>
+                        <p class="card-text">Total de Tarefas</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card text-center">
+                    <div class="card-body">
+                        <h5 class="card-title text-success">{{ tasks|selectattr('completed')|list|length }}</h5>
+                        <p class="card-text">Concluídas</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card text-center">
+                    <div class="card-body">
+                        <h5 class="card-title text-warning">{{ tasks|rejectattr('completed')|list|length }}</h5>
+                        <p class="card-text">Pendentes</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}
+
