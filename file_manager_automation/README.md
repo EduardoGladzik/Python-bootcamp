@@ -5,10 +5,7 @@ A Python script that automatically organizes files in your Documents folder by c
 ## Features
 
 - **Automatic File Organization**: Automatically sorts files into predefined categories based on file extensions
-- **Windows Integration**: Uses Windows API to properly handle hidden and system files
 - **Safe Processing**: Skips hidden and system files to prevent accidental modification of critical system files
-- **Multiple File Categories**: Supports Images, Documents, Audio, Video, and Other categories
-- **Case-Insensitive**: Handles file extensions regardless of case
 
 ## Supported File Categories
 
@@ -30,7 +27,7 @@ A Python script that automatically organizes files in your Documents folder by c
 ## How It Works
 
 1. **File Discovery**: Scans the Documents folder for all files
-2. **Hidden File Detection**: Uses Windows API to identify and skip hidden or system files
+2. **Hidden File Detection**: Identify and skip hidden or system files (windows only)
 3. **Extension Analysis**: Extracts file extensions and converts them to lowercase for case-insensitive matching
 4. **Category Assignment**: Maps file extensions to appropriate categories using a predefined dictionary
 5. **Directory Creation**: Creates target directories if they don't exist
@@ -40,13 +37,6 @@ A Python script that automatically organizes files in your Documents folder by c
 
 - Python 3.x
 - Windows operating system (uses Windows-specific API calls)
-- No external dependencies (uses only built-in Python modules)
-
-## Installation
-
-1. Clone or download this repository
-2. Ensure you have Python 3.x installed on your Windows system
-3. No additional package installation required
 
 ## Usage
 
@@ -61,12 +51,6 @@ A Python script that automatically organizes files in your Documents folder by c
 
 The script operates on your Documents folder by default:
 - **Windows**: `C:\Users\[username]\Documents`
-
-## Safety Features
-
-- **Hidden File Protection**: Automatically skips files marked as hidden or system files
-- **Non-Destructive**: Only moves files, doesn't delete them
-- **Error Handling**: Gracefully handles files that cannot be processed
 
 ## File Structure After Organization
 
@@ -98,7 +82,6 @@ Documents/
 - Uses `pathlib.Path` for cross-platform path handling
 - Implements Windows API calls via `ctypes` for file attribute checking
 - Creates directories with `exist_ok=True` and `parents=True` for safe directory creation
-- Uses `file.rename()` for efficient file moving operations
 
 ## Customization
 
@@ -107,6 +90,19 @@ To modify the file categories or add new file types:
 1. Edit the `categories` dictionary in `script.py`
 2. Add new extensions to existing categories or create new categories
 3. The script will automatically handle the new categories
+
+## Future Improvements
+
+### Planned Enhancements
+
+- **Graphical User Interface (GUI)**: Add a user-friendly interface to make the tool more accessible to non-technical users
+  - Progress tracking and status updates
+  - Settings and preferences panel
+
+- **Executable Script**: Convert the Python script into a standalone executable file
+
+- **System Integration**: Integrate with Windows Task Scheduler for automated execution
+  - Scheduled file organization (daily, weekly, or custom intervals)
 
 ## Notes
 
